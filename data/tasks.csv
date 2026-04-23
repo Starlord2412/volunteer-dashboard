@@ -1,0 +1,9 @@
+id,title,description,required_skills,location,urgency_level
+101,Website Revamp,We need a skilled web developer to update our charity website and make it mobile-friendly.,Web Development;React,Remote,High
+102,Weekend Coding Bootcamp,Looking for volunteers to teach basic Python to high school students this weekend.,Python;Teaching,New York,Medium
+103,Disaster Relief Logistics,Need experienced drivers and logistics coordinators for immediate relief distribution.,Logistics;Driving;First Aid,Chicago,High
+104,Annual Fundraising Gala,Looking for an event manager to help coordinate our largest fundraising event of the year.,Event Management;Fundraising,Los Angeles,High
+105,Social Media Campaign,We need help creating engaging content for our upcoming wildlife conservation campaign.,Social Media Marketing;Content Creation,Remote,Low
+106,Bilingual Translator,Need someone to translate our brochures into Spanish and French.,Translation;Spanish;French,Remote,Medium
+107,Community Center Repair,Need skilled carpenters to help fix the roof of our local community center.,Carpentry;Construction,Los Angeles,High
+108,Financial Audit Help,We need an accountant to review our yearly financials before the board meeting.,Accounting;Finance,Chicago,Medium
