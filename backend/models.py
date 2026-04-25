@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 class Volunteer(BaseModel):
     id: int
@@ -47,5 +47,5 @@ class ExtractSkillsRequest(BaseModel):
 
 class MatchExplanationResponse(BaseModel):
     explanation: str
-    skill_gap_analysis: Dict[str, List[str]]
+    skill_gap_analysis: Dict[str, Any]
    

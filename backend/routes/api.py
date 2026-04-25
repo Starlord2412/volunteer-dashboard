@@ -76,14 +76,33 @@ def explain_match_route(request: MatchExplanationRequest):
     volunteer_info = request.volunteer.model_dump()
     task_info = request.task.model_dump()
 
+
+
+
+
+#newly added code for urgent match dashboard
   
     
     explanation_data = explain_match(volunteer_info, task_info)
+    skill_data = explanation_data.get("skill_gap_analysis", {})
+    if isinstance(skill_data, str):
+        skill_data = {
+            "matching_skills": [],
+            "missing_skills": [],
+            "partial_skills": [],
+            "summary": skill_data
+        }
     return MatchExplanationResponse(
-        explanation=explanation_data["explanation"],
-        skill_gap_analysis=explanation_data["skill_gap_analysis"]
+        explanation=explanation_data.get("explanation", ""),
+        skill_gap_analysis=skill_data
     )
+     
 
+
+
+
+
+     ######################################
 @router.put("/volunteers/{volunteer_id}/assignment")
 def update_assignment(volunteer_id: int, update_data: VolunteerAssignmentUpdate):
     success = update_volunteer_assignment(volunteer_id, update_data.is_assigned)

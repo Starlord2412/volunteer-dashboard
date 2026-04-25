@@ -123,7 +123,7 @@ client = genai.Client(
 # Select Working Model
 # ===============================
 def get_model():
-    return "gemini-2.0-flash"
+    return "gemini-2.5-flash"
 
 
 # ===============================
@@ -253,8 +253,13 @@ def explain_match(volunteer_info: dict, task_info: dict) -> dict:
 
     return {
         "explanation": explanation,
-        "skill_gap_analysis": skill_gap
-
+        # "skill_gap_analysis": skill_gap
+            "skill_gap_analysis": {
+                "matching_skills": [],
+                "missing_skills": skill_gap.split(";") if skill_gap else [],
+                "partial_skills": [],
+                "summary": skill_gap
+            }
         
     }
     

@@ -160,7 +160,10 @@ export default function Assignments() {
 
                     {/* Skills */}
                     <div className="sm:col-span-3 flex flex-wrap gap-1">
-                      {(v.skills || []).slice(0, 2).map((s, si) => (
+                      {(typeof v.skills === 'string'
+  ? v.skills.split(';')
+  : v.skills || []
+).slice(0, 2).map((s, si) => (
                         <span key={si} className="skill-chip text-[10px] py-0.5">{s}</span>
                       ))}
                       {(v.skills || []).length > 2 && (
