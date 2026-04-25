@@ -166,9 +166,16 @@ export default function Assignments() {
 ).slice(0, 2).map((s, si) => (
                         <span key={si} className="skill-chip text-[10px] py-0.5">{s}</span>
                       ))}
-                      {(v.skills || []).length > 2 && (
+                     {(typeof v.skills === 'string'
+  ? v.skills.split(';')
+  : v.skills || []
+).length > 2 && (
                         <span className="skill-chip text-[10px] py-0.5 text-slate-400">
-                          +{v.skills.length - 2}
+                   +{
+ (typeof v.skills === 'string'
+   ? v.skills.split(';').length
+   : v.skills.length) - 2
+}
                         </span>
                       )}
                     </div>

@@ -57,23 +57,60 @@ export default function Match() {
     }
   }
 
-  const handleAssign = async (match) => {
-    const volunteerId = match.volunteer_id || match.id
-    if (!volunteerId) return toast.error('No volunteer ID found')
-    setAssigning(volunteerId)
-    try {
-      await updateAssignment(volunteerId, {
-        assigned: true,
-        task_id: form.task_id || undefined,
-      })
-      toast.success(`${match.volunteer_name || match.name || 'Volunteer'} assigned successfully!`)
-      setMatches(prev => prev.filter(m => (m.volunteer_id || m.id) !== volunteerId))
-    } catch (err) {
-      toast.error(err.message || 'Assignment failed')
-    } finally {
-      setAssigning(null)
-    }
+  // const handleAssign = async (match) => {
+  //   const volunteerId = match.volunteer_id || match.id
+  //   if (!volunteerId) return toast.error('No volunteer ID found')
+  //   setAssigning(volunteerId)
+  //   try {
+  //     await updateAssignment(volunteerId, {
+  //       assigned: true,
+  //       task_id: form.task_id || undefined,
+  //     })
+  //     toast.success(`${match.volunteer_name || match.name || 'Volunteer'} assigned successfully!`)
+  //     setMatches(prev => prev.filter(m => (m.volunteer_id || m.id) !== volunteerId))
+  //   } catch (err) {
+  //     toast.error(err.message || 'Assignment failed')
+  //   } finally {
+  //     setAssigning(null)
+  //   }
+  // }
+
+
+
+
+const handleAssign = async (match) => {
+  const volunteerId = match.volunteer_id || match.id
+
+  if (!volunteerId) {
+    toast.error('No volunteer ID found')
+    return
   }
+
+  setAssigning(volunteerId)
+
+  try {
+    await updateAssignment(volunteerId, {
+      is_assigned: true
+    })
+
+    toast.success(
+      `${match.volunteer_name || match.name || 'Volunteer'} assigned successfully!`
+    )
+
+    // Remove from match list instantly
+    setMatches(prev =>
+      prev.filter(
+        m => (m.volunteer_id || m.id) !== volunteerId
+      )
+    )
+
+  } catch (err) {
+    toast.error(err.message || 'Assignment failed')
+  } finally {
+    setAssigning(null)
+  }
+}
+
 
   return (
     <div className="p-5 space-y-5 animate-fade-in">

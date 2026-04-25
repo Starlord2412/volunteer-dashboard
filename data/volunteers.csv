@@ -1,11 +1,11 @@
-id,name,skills,location,availability,past_experience
-1,Alice Johnson,Python;Data Analysis;Teaching,New York,Weekends,Taught coding to kids for 2 years
-2,Bob Smith,Event Management;Fundraising,Los Angeles,Evenings,Organized 3 charity galas
-3,Charlie Davis,Web Development;React;Node.js,Remote,Full-time,Built websites for local businesses
-4,Diana Prince,First Aid;Logistics;Driving,Chicago,Weekends,Paramedic with logistics background
-5,Evan Wright,Social Media Marketing;Content Creation,New York,Part-time,Managed Instagram for an animal shelter
-6,Fiona Gallagher,Translation;Spanish;French,Remote,Evenings,Freelance translator
-7,George Martin,Carpentry;Construction,Los Angeles,Weekends,Professional carpenter wanting to give back
-8,Hannah Abbott,Accounting;Finance;Excel,Chicago,Full-time,CPA with 5 years experience
-9,Ian Malcolm,Mathematics;Teaching;Mentoring,New York,Weekends,University professor
-10,Julia Roberts,Public Speaking;PR;Media Relations,Los Angeles,Part-time,Former PR executive
+id,name,skills,location,availability,past_experience,is_assigned
+1,Alice Johnson,Python;Data Analysis;Teaching,New York,Weekends,Taught coding to kids for 2 years,False
+2,Bob Smith,Event Management;Fundraising,Los Angeles,Evenings,Organized 3 charity galas,True
+3,Charlie Davis,Web Development;React;Node.js,Remote,Full-time,Built websites for local businesses,True
+4,Diana Prince,First Aid;Logistics;Driving,Chicago,Weekends,Paramedic with logistics background,True
+5,Evan Wright,Social Media Marketing;Content Creation,New York,Part-time,Managed Instagram for an animal shelter,True
+6,Fiona Gallagher,Translation;Spanish;French,Remote,Evenings,Freelance translator,True
+7,George Martin,Carpentry;Construction,Los Angeles,Weekends,Professional carpenter wanting to give back,False
+8,Hannah Abbott,Accounting;Finance;Excel,Chicago,Full-time,CPA with 5 years experience,False
+9,Ian Malcolm,Mathematics;Teaching;Mentoring,New York,Weekends,University professor,True
+10,Julia Roberts,Public Speaking;PR;Media Relations,Los Angeles,Part-time,Former PR executive,False
