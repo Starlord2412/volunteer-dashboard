@@ -10,7 +10,7 @@ from models import (
     Volunteer,
     VolunteerAssignmentUpdate
 )
-from services.data_service import get_volunteer_by_id, load_tasks, load_volunteers, get_task_by_id, update_volunteer_assignment
+from services.data_service import get_volunteer_by_id, load_tasks, load_volunteers, get_task_by_id
 from services.ml_service import match_volunteers_to_task
 from services.llm_service import extract_skills_from_description, explain_match
 
@@ -20,13 +20,15 @@ router = APIRouter()
 def health_check():
     return {"status": "ok"}
 
-@router.get("/tasks", response_model=List[Task])
+@router.get("/tasks",response_model=list[Task])
 def get_tasks():
-    return load_tasks()
+  tasks=load_tasks()
+  return tasks
 
-@router.get("/volunteers", response_model=List[Volunteer])
+@router.get("/volunteers",response_model=List[Volunteer])
 def get_volunteers():
-    return load_volunteers()
+    volunteers=load_volunteers() 
+    return volunteers
 
 @router.post("/extract-skills")
 def extract_skills(request: ExtractSkillsRequest):
@@ -103,25 +105,27 @@ def explain_match_route(request: MatchExplanationRequest):
 
 
      ######################################
-@router.put("/volunteers/{volunteer_id}/assignment")
-def update_assignment(volunteer_id: int, update_data: VolunteerAssignmentUpdate):
-    success = update_volunteer_assignment(volunteer_id, update_data.is_assigned)
-    if not success:
-        raise HTTPException(status_code=404, detail="Volunteer not found")
-    return {"status": "success", "is_assigned": update_data.is_assigned}
+# @router.put("/volunteers/{volunteer_id}/assignment")
+# def update_assignment(volunteer_id: int, update_data: VolunteerAssignmentUpdate):
+#     success = update_volunteer_assignment(volunteer_id, update_data.is_assigned)
+#     if not success:
+#         raise HTTPException(status_code=404, detail="Volunteer not found")
+#     return {"status": "success", "is_assigned": update_data.is_assigned}
 
-@router.get("/dashboard/urgent-matches")
-def get_urgent_matches():
-    tasks = load_tasks()
-    volunteers = load_volunteers()
-    urgent_tasks = [t for t in tasks if t.get('urgency_level') == 'High']
+
+
+# @router.get("/dashboard/urgent-matches")
+# def get_urgent_matches():
+#     tasks = load_tasks()
+#     volunteers = load_volunteers()
+#     urgent_tasks = [t for t in tasks if t.get('urgency_level') == 'High']
     
-    results = []
-    for task in urgent_tasks:
-        # Match using available volunteers
-        matches = match_volunteers_to_task(task, volunteers, top_n=5)
-        results.append({
-            "task": task,
-            "matches": matches
-        })
-    return results
+#     results = []
+#     for task in urgent_tasks:
+#         # Match using available volunteers
+#         matches = match_volunteers_to_task(task, volunteers, top_n=5)
+#         results.append({
+#             "task": task,
+#             "matches": matches
+#         })
+#     return results
