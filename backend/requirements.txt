@@ -5,3 +5,5 @@ pandas
 python-dotenv
 google-genai
 pydantic
+sqlalchemy
+psycopg2

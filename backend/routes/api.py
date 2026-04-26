@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException,status
-from typing import List
+from fastapi import APIRouter, HTTPException
+from typing import List, Dict
 from models import (
     MatchRequest,
     MatchResult,
@@ -7,10 +7,9 @@ from models import (
     MatchExplanationResponse,
     ExtractSkillsRequest,
     Task,
-    Volunteer,
-    VolunteerAssignmentUpdate
+    Volunteer
 )
-from services.data_service import get_volunteer_by_id, load_tasks, load_volunteers, get_task_by_id, update_volunteer_assignment
+from services.data_service import load_tasks, load_volunteers, get_task_by_id
 from services.ml_service import match_volunteers_to_task
 from services.llm_service import extract_skills_from_description, explain_match
 
@@ -20,13 +19,15 @@ router = APIRouter()
 def health_check():
     return {"status": "ok"}
 
-@router.get("/tasks", response_model=List[Task])
+@router.get("/tasks",response_model=list[Task])
 def get_tasks():
-    return load_tasks()
+  tasks=load_tasks()
+  return tasks
 
-@router.get("/volunteers", response_model=List[Volunteer])
+@router.get("/volunteers",response_model=List[Volunteer])
 def get_volunteers():
-    return load_volunteers()
+    volunteers=load_volunteers() 
+    return volunteers
 
 @router.post("/extract-skills")
 def extract_skills(request: ExtractSkillsRequest):
@@ -75,53 +76,9 @@ def match_volunteers(request: MatchRequest):
 def explain_match_route(request: MatchExplanationRequest):
     volunteer_info = request.volunteer.model_dump()
     task_info = request.task.model_dump()
-
-
-
-
-
-#newly added code for urgent match dashboard
-  
     
     explanation_data = explain_match(volunteer_info, task_info)
-    skill_data = explanation_data.get("skill_gap_analysis", {})
-    if isinstance(skill_data, str):
-        skill_data = {
-            "matching_skills": [],
-            "missing_skills": [],
-            "partial_skills": [],
-            "summary": skill_data
-        }
     return MatchExplanationResponse(
-        explanation=explanation_data.get("explanation", ""),
-        skill_gap_analysis=skill_data
+        explanation=explanation_data["explanation"],
+        skill_gap_analysis=explanation_data["skill_gap_analysis"]
     )
-     
-
-
-
-
-
-     ######################################
-@router.put("/volunteers/{volunteer_id}/assignment")
-def update_assignment(volunteer_id: int, update_data: VolunteerAssignmentUpdate):
-    success = update_volunteer_assignment(volunteer_id, update_data.is_assigned)
-    if not success:
-        raise HTTPException(status_code=404, detail="Volunteer not found")
-    return {"status": "success", "is_assigned": update_data.is_assigned}
-
-@router.get("/dashboard/urgent-matches")
-def get_urgent_matches():
-    tasks = load_tasks()
-    volunteers = load_volunteers()
-    urgent_tasks = [t for t in tasks if t.get('urgency_level') == 'High']
-    
-    results = []
-    for task in urgent_tasks:
-        # Match using available volunteers
-        matches = match_volunteers_to_task(task, volunteers, top_n=5)
-        results.append({
-            "task": task,
-            "matches": matches
-        })
-    return results

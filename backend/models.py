@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 
 class Volunteer(BaseModel):
     id: int
@@ -8,11 +8,6 @@ class Volunteer(BaseModel):
     location: str
     availability: str
     past_experience: str
-    is_assigned: bool = False
-
-class VolunteerAssignmentUpdate(BaseModel):
-    is_assigned: bool
-
 
 class Task(BaseModel):
     id: int
@@ -40,12 +35,6 @@ class MatchExplanationRequest(BaseModel):
 class ExtractSkillsRequest(BaseModel):
     description: str
 
-
-
-
-
-
 class MatchExplanationResponse(BaseModel):
     explanation: str
-    skill_gap_analysis: Dict[str, Any]
-   
+    skill_gap_analysis: Optional[str] = None
